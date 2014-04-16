@@ -1,6 +1,6 @@
 import Data.List
 
-main = print (product (concat(pythagTriple (toInteger(1000)))))
+main = print $ product (concat (pythagTriple (toInteger(1000))))
 
 -- neat trick here
 -- so according to Euler, any pythagorean triple can be computed using
@@ -27,22 +27,13 @@ main = print (product (concat(pythagTriple (toInteger(1000)))))
 -- and checking is boring
 pythagTriple val = 
                  let factors = factors_naive (val `div` 2)
-                     get_s n vals= filter (`gtxlt2x` n) vals 
-                     abc_list = concat (
-                                  map (\t -> (
-                                    map (\x -> [x `subtract` snd(t),
-                                                x,
-                                                (val `div` 2) `div` (x * snd(t))])
-                                    (fst(t)))) (filter ((/=[]).fst) (zip (
-                                      map (`get_s` factors) factors) factors)))
-                 in nub (filter (/=[0,0,0]) (map nmk2abc abc_list))
+                     abc_list = [[b - a, a, ((val `div` 2) `div` (b * a))] |
+                                 a <- factors, b <- factors, gtxlt2x a b]
+                 in nub $ filter (/=[0,0,0]) $ map nmk2abc abc_list
 
-nmk2abc (n:m:k:[]) = [k*((n^2) `subtract` (m^2)),
+nmk2abc (m:n:k:[]) = [k*((n^2) - (m^2)),
                       (k * (2 * m * n)), 
                       k*((n^2) + (m^2))]
-
--- check a < b < c for triple
-altbltc (a:b:c:[]) = (a < b) && (b < c)
 
 -- check that x < y < 2x
 gtxlt2x x y = (y > x) && (y < 2*x)
