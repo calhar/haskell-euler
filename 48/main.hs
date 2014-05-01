@@ -22,7 +22,7 @@
 --   }
 -- }
 --
--- because taking the last n digits is equivalent to modulo 10^n arithmatic
+-- because taking the last n digits is equivalent to modulo 10^n arithmetic
 -- and (a * b) % c = ((a % c) * (b % c)) % c
 -- and (a + b) % c = ((a % c) + (b % c)) % c
 --
