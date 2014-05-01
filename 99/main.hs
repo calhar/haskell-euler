@@ -8,6 +8,12 @@ import Data.Ord
 -- will allow us to easily compare them
 --
 -- because
+-- if a^b = x^y
+-- log (a^b) = log (x^y)
+-- => b * log(a) = y * log(x)
+--
+--
+-- don't know why, but I felt like taking them as log_a, but whatever
 -- log_a (a^b) = b
 -- log_a (x ^ y) = y * (log_a (a * x / a))
 --               = y * (log_a (a) + log_a (x / a))
@@ -31,4 +37,4 @@ toTuple str = tuplify2 $ map (\t -> read t :: Double) $ split "," str
 tuplify2 [x, y] = (x, y)
 
 tupCompare p x y = expCompare (p x) (p y)
-expCompare (v, w) (x, y) = compare (w) (y * ((log x) / (log v)))
+expCompare (v, w) (x, y) = compare (w * (log v)) (y * (log x))
