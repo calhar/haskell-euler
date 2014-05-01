@@ -27,4 +27,4 @@
 -- and (a + b) % c = ((a % c) + (b % c)) % c
 --
 main = print $ reverse $ take 10 $ reverse $ show $ sum $
-         map (\t -> t ^ t) [1..1000]
+         [x ^ x | x <- [1..1000]]
