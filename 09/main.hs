@@ -37,9 +37,9 @@ pythagTriple val =
                                  a <- factors, b <- factors, gtxlt2x a b]
                  in nub $ filter (\t -> sum t == val) $ map nmk2abc abc_list
 
-nmk2abc (m:n:k:[]) = [k*((n^2) - (m^2)),
-                      (k * (2 * m * n)), 
-                      k*((n^2) + (m^2))]
+nmk2abc (m:n:k:[]) = sort [k*((n^2) - (m^2)),
+                           (k * (2 * m * n)), 
+                           k*((n^2) + (m^2))]
 
 -- check that x < y < 2x
 gtxlt2x x y = (y > x) && (y < 2*x)
