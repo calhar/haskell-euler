@@ -26,11 +26,7 @@ import Data.Ord
 --
 main = do
         contents <- readFile "base_exp.txt"
-        print $ maximumBy (tupCompare snd) $ zipInf [1..] $ map toTuple $ lines contents
-
-zipInf [] list = []
-zipInf list [] = []
-zipInf (h1:xs1) (h2:xs2) = (h1, h2) : zipInf xs1 xs2
+        print $ maximumBy (tupCompare snd) $ zip [1..] $ map toTuple $ lines contents
 
 toTuple str = tuplify2 $ map (\t -> read t :: Double) $ split "," str
 
