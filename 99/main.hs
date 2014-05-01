@@ -1,0 +1,34 @@
+import Data.List.Utils
+import Data.List
+import Data.Ord
+
+-- so we have two large exponentials of the form a^b and x^y
+--
+-- obviously taking the logarithm of these in base a or x
+-- will allow us to easily compare them
+--
+-- because
+-- log_a (a^b) = b
+-- log_a (x ^ y) = y * (log_a (a * x / a))
+--               = y * (log_a (a) + log_a (x / a))
+--               = y + y * log_a (ratio)
+-- 
+-- read lines from file and convert each val a^b to a tuple (a, b)
+-- zip with the infinite list to get into the form (index, (a, b))
+--
+-- then compare (i, (a, b)) (i2, (x, y)) by comparing b with y * log_a (x)
+--
+main = do
+        contents <- readFile "base_exp.txt"
+        print $ maximumBy (tupCompare snd) $ zipInf [1..] $ map toTuple $ lines contents
+
+zipInf [] list = []
+zipInf list [] = []
+zipInf (h1:xs1) (h2:xs2) = (h1, h2) : zipInf xs1 xs2
+
+toTuple str = tuplify2 $ map (\t -> read t :: Double) $ split "," str
+
+tuplify2 [x, y] = (x, y)
+
+tupCompare p x y = expCompare (p x) (p y)
+expCompare (v, w) (x, y) = compare (w) (y * ((log x) / (log v)))
