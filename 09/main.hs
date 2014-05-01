@@ -1,6 +1,6 @@
 import Data.List
 
-main = print $ product (concat (pythagTriple (toInteger(1000))))
+main = print $ product $ concat $ (pythagTriple (toInteger(120)))
 
 -- neat trick here
 -- so according to Euler, any pythagorean triple can be computed using
@@ -25,11 +25,17 @@ main = print $ product (concat (pythagTriple (toInteger(1000))))
 -- b = [a..1000]
 -- c = 1000 - a - b
 -- and checking is boring
+--
+-- bug discovered in euler 39 is for ((val `div` 2) `div` (b * a))
+-- occurs due to integer division of 60 / 24
+--
+-- Ignorable I think since any values that get picked up by this will get
+-- discovered by other factor choices for a,b
 pythagTriple val = 
                  let factors = factors_naive (val `div` 2)
                      abc_list = [[b - a, a, ((val `div` 2) `div` (b * a))] |
                                  a <- factors, b <- factors, gtxlt2x a b]
-                 in nub $ filter (/=[0,0,0]) $ map nmk2abc abc_list
+                 in nub $ filter (\t -> sum t == val) $ map nmk2abc abc_list
 
 nmk2abc (m:n:k:[]) = [k*((n^2) - (m^2)),
                       (k * (2 * m * n)), 
