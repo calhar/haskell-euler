@@ -2,14 +2,14 @@ import Data.List
 import Data.Ord
 
 main = print $ maximumBy (comparing snd) $
-          zip [1..1000] $ map length $ map (pythagTriple) [1..1000]
+          zip [2, 4 ..1000] $ map length $ map (pythagTriple) [2, 4 ..1000]
 
 -- as in euler 09
 -- we can get pythag triples using this
 --
 -- although apparently i need to fix some things here
--- because 13 has the triple 3,4,5 showing up for it
--- and 120 has 24, 32, 40 showing up for some reason
+-- since 120 has (24, 32, 40) showing up for some reason
+-- I assume it's something wrong with ((val `div` 2) `div` (b * a))
 --
 -- Whatever, another filter so that sum of the triple == val works too
 pythagTriple val = 
